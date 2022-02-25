@@ -1,0 +1,195 @@
+body {
+  margin: 0;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.2rem;
+  margin-bottom: 0.8rem;
+}
+
+.centre {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wind,
+.humidity,
+.pressure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+i {
+  font-size: 1.8rem;
+}
+
+.wind i {
+  color: #637b8d;
+}
+
+.humidity i {
+  color: #3a6ba4;
+}
+
+.pressure i {
+  color: #c93b24;
+}
+
+.temp {
+  display: grid;
+  grid-template-areas: "main" "min" "feel" "max";
+  align-items: center;
+  justify-content: center;
+}
+
+#temp-main {
+  grid-area: main;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 4;
+  display: flex;
+  font-size: 4rem;
+}
+
+#temp-min {
+  grid-area: min;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+#temp-feel {
+  grid-area: feel;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+#temp-max {
+  grid-area: max;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 3;
+  grid-row-end: 4;
+}
+
+.hidden {
+  display: none;
+}
+
+.form-control {
+  display: flex;
+  flex-direction: column;
+  padding: 0.2rem 0.8rem;
+}
+
+input,
+select,
+textarea {
+  outline: none;
+  padding: 0.2rem;
+  border: 1px solid #637b8d;
+  border-radius: 0.2rem;
+  resize: vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border: 1px solid silver;
+}
+
+button {
+  cursor: pointer;
+}
+
+#edit-button {
+  border: none;
+  background-color: transparent;
+}
+
+#edit-button i {
+  font-size: 1.5rem;
+}
+
+#submit-button {
+  border: none;
+  padding: 0.4rem;
+  background-color: #2d527c;
+  color: aliceblue;
+  border-radius: 0.2rem;
+}
+
+.btn-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+#submit-button:hover {
+  background-color: #3a6ba4;
+}
+
+.wrapper {
+  min-height: calc(100vh - 50px);
+}
+footer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: #333;
+  color: white;
+  height: 50px;
+  justify-content: center;
+}
+
+a {
+  color: #abcfeb;
+  text-decoration: none;
+  transition: 0.5 linear;
+}
+
+a:hover {
+  color: #3a6ba4;
+}
+
+.sun-time {
+  width: 150px;
+  text-align: center;
+  justify-content: center;
+  margin: 0.8rem auto;
+}
+
+.sun-time span {
+  font-weight: bold;
+}
+
+.sun-time i {
+  font-size: 1.2rem;
+  margin-right: 0.2rem;
+}
+
+.sun-time img {
+  height: 30px;
+  width: 30px;
+}
+
+.fa-sun {
+  color: #e07d00;
+}
+
+.fa-moon {
+  color: #fee143;
+}
+
+#feeling {
+  width: clamp(150px, 80%, 480px);
+  margin: auto;
+  font-style: italic;
+}

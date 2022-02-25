@@ -6,6 +6,8 @@ const port = 1960;
 
 const app = express();
 
+let projectData = {};
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
@@ -17,4 +19,12 @@ app.listen(port, () => {
 
 app.get("/", (_req, res) => {
   res.sendFile(path.resolve("pages/index.html"));
+});
+
+app.get("/weather", (req, res) => {
+  res.json(projectData);
+});
+
+app.post("/weather", (req, res) => {
+  projectData = req.body;
 });
