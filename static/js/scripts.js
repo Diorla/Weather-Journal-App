@@ -31,61 +31,20 @@ const defaultValue = {
   unit: "metric",
 };
 
-submitButton.addEventListener("click", (e) => {
-  e.preventDefault();
-  submitButton.setAttribute("disabled", "true");
-
-  fetchOpenWeather(
-    {
-      postCode: postCodeInput.value,
-      countryCode: countrySelect.value,
-      unit: unitsSelect.value,
-      language: languageSelect.value,
-    },
-    (data) => {
-      updateBody({
-        ...data,
-        feeling: feelingInput.value,
-        unit: unitsSelect.value,
-      });
-
-      hideForm();
-
-      submitButton.removeAttribute("disabled");
-      // update address and other info only if it is a valid address
-      postData("/weather-update", {
-        feeling: feelingInput.value,
-        postCode: postCodeInput.value,
-        countryCode: countrySelect.value,
-        unit: unitsSelect.value,
-        language: languageSelect.value,
-      }).catch((err) => {
-        console.log("postData", err);
-        submitButton.removeAttribute("disabled");
-      });
-    },
-    (err) => {
-      console.log("fetchWeather", err);
-      submitButton.removeAttribute("disabled");
-    }
-  );
-});
-
-const hideForm = () => {
+function hideForm() {
   form.classList.add("hidden");
   editIcon.classList.remove("fa-xmark");
-};
+}
 
-const showForm = () => {
+function showForm() {
   form.classList.remove("hidden");
   editIcon.classList.add("fa-xmark");
-};
+}
 
-editButton.addEventListener("click", () => {
-  return form.classList.contains("hidden") ? showForm() : hideForm();
-});
-
-// supported language on open weather api
+/**
+ * Used to load the list of languages
+ * It is based on supported language on openweather api
+ */
 const loadLanguageList = new Promise((resolve, reject) => {
   fetch("../data/languages.json")
     .then((respond) => {
@@ -96,6 +55,9 @@ const loadLanguageList = new Promise((resolve, reject) => {
     });
 });
 
+/**
+ * list of countries and the 2 letter ISO codes
+ */
 const loadCountryList = new Promise((resolve, reject) => {
   fetch("../data/countries.json")
     .then((respond) => {
@@ -106,6 +68,10 @@ const loadCountryList = new Promise((resolve, reject) => {
     });
 });
 
+/**
+ * It will update the value of language <select/>
+ * @param {string} language the language code e.g. en
+ */
 const renderLanguageSelect = (language) => {
   const docFrag = new DocumentFragment();
   loadLanguageList
@@ -126,7 +92,11 @@ const renderLanguageSelect = (language) => {
     .catch((err) => console.log(err));
 };
 
-const renderCountrySelect = (countryCode) => {
+/**
+ * It will update the value of ISO code of the country <select/>
+ * @param {string} countryCode the 2 letter ISO code e.g. GB
+ */
+function renderCountrySelect(countryCode) {
   const docFrag = new DocumentFragment();
   loadCountryList
     .then((dt) => {
@@ -144,9 +114,15 @@ const renderCountrySelect = (countryCode) => {
       countrySelect.value = countryCode;
     })
     .catch((err) => console.log(err));
-};
+}
 
-const postData = async (url = "", data = {}) => {
+/**
+ * It will send data using post method
+ * @param {string} url api endpoint
+ * @param {any} data the data that will be sent to the API endpoint
+ * @returns Promise<any>
+ */
+async function postData(url = "", data = {}) {
   const response = await fetch(url, {
     method: "POST",
     credentials: "same-origin",
@@ -157,14 +133,14 @@ const postData = async (url = "", data = {}) => {
   });
 
   return await response.json();
-};
+}
 
 /**
  * Used to fetch data
  * @param {string} url the API endpoint
  * @returns Promise<any>
  */
-const fetchData = async (url = "", handleError) => {
+async function fetchData(url = "", handleError) {
   const response = await fetch(url);
 
   try {
@@ -174,12 +150,12 @@ const fetchData = async (url = "", handleError) => {
     handleError ? handleError(error) : console.log("error", error);
     return null;
   }
-};
+}
 
 /**
  * For deriving sunrise and sunset time
- * @param {*} unixTime
- * @param {*} timezone
+ * @param {number} unixTime the unix time supplied by openweather api
+ * @param {number} timezone the difference in timezone from GMT.
  * @returns
  */
 function convertTime(unixTime, timezone) {
@@ -190,12 +166,22 @@ function convertTime(unixTime, timezone) {
   return t;
 }
 
+/**
+ * Used to fetch data from openweather API
+ * @param {object} param the list of params to be submitted
+ * @param {string} param.countryCode - The 2 letter ISO code.
+ * @param {string} param.language - language code e.g fr
+ * @param {string} param.postCode - zip code or post code, whatever they call it in your country
+ * @param {string} param.unit - of the the measuring system
+ * @param {(args: any)=>void} updateBody it will handle the data returned
+ * @param {(err: Error)=> void} handleError function to handle error data
+ */
 async function fetchOpenWeather(
   {
     countryCode = "GB",
     language = "en",
     postCode = "SW1A 0AA",
-    unit = "standard",
+    unit = "metric",
   },
   updateBody,
   handleError
@@ -245,13 +231,23 @@ async function fetchOpenWeather(
   }
 }
 
-const formatTemp = (value, unit) => {
+/**
+ * Formats the value based on the measuring system chosen
+ * @param {number} value the current temperature
+ * @param {string} unit the type, e.g. the metric system which is celsius
+ * @returns string
+ */
+function formatTemp(value, unit) {
   if (unit === "standard") return `${value}K`;
   if (unit === "imperial") return `${value}℉`;
   return `${value}℃`;
-};
+}
 
-const updateBody = (obj) => {
+/**
+ * It will take parameters and write it to the html
+ * @param {object} obj list of weather parameters that will rendered to html
+ */
+function updateBody(obj) {
   const {
     description,
     icon,
@@ -300,7 +296,51 @@ const updateBody = (obj) => {
 
   humidityElem.textContent = `${humidity}%`;
   pressureElem.textContent = `${pressure}hPA`;
-};
+}
+
+submitButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  submitButton.setAttribute("disabled", "true");
+
+  fetchOpenWeather(
+    {
+      postCode: postCodeInput.value,
+      countryCode: countrySelect.value,
+      unit: unitsSelect.value,
+      language: languageSelect.value,
+    },
+    (data) => {
+      updateBody({
+        ...data,
+        feeling: feelingInput.value,
+        unit: unitsSelect.value,
+      });
+
+      hideForm();
+
+      submitButton.removeAttribute("disabled");
+      // update address and other info only if it is a valid address
+      postData("/weather-update", {
+        feeling: feelingInput.value,
+        postCode: postCodeInput.value,
+        countryCode: countrySelect.value,
+        unit: unitsSelect.value,
+        language: languageSelect.value,
+      }).catch((err) => {
+        console.log("postData", err);
+        submitButton.removeAttribute("disabled");
+      });
+    },
+    (err) => {
+      console.log("fetchWeather", err);
+      submitButton.removeAttribute("disabled");
+    }
+  );
+});
+
+editButton.addEventListener("click", () => {
+  return form.classList.contains("hidden") ? showForm() : hideForm();
+});
 
 document.addEventListener("DOMContentLoaded", () => {
   todayDateElem.textContent = new Date().toDateString();
