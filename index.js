@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
+const colors = require("colors");
 const port = 1960;
 
 const app = express();
@@ -14,7 +15,11 @@ app.use(cors());
 app.use(express.static("static"));
 
 app.listen(port, () => {
-  console.log(`server up and running at ${port}`);
+  console.log(
+    `Server up and running at port ${colors.bold(port)}, click ${
+      ("http://localhost:" + port).blue.underline
+    } to view it`
+  );
 });
 
 app.get("/", (_req, res) => {
@@ -25,6 +30,7 @@ app.get("/weather", (req, res) => {
   res.json(projectData);
 });
 
-app.post("/weather", (req, res) => {
-  projectData = req.body;
+app.post("/weather-update", (req, res) => {
+  projectData = { ...projectData, ...req.body };
+  res.json(projectData);
 });

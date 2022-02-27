@@ -14,13 +14,10 @@
   <body>
     <main class="wrapper">
       <div class="row">
-        <div id="location">Liverpool, GB</div>
+        <div id="location"></div>
         <button id="edit-button"><i class="fa-solid fa-pen"></i></button>
       </div>
-      <div id="feeling">
-        I feel like a million buck today. I ate sushi and drank coffee. I don't
-        know yet, but I'm sure today is going to be amazing. Yes, let's do this.
-      </div>
+      <div id="feeling"></div>
       <form action="/weather-info" method="POST" class="hidden">
         <div class="form-control">
           <label for="feeling-input">Feelings</label>
@@ -54,49 +51,51 @@
           <select id="units">
             <option value="standard">Standard</option>
             <option value="metric">Metric</option>
-            <option value="imperial">Imperia</option>
+            <option value="imperial">Imperial</option>
           </select>
         </div>
         <div class="btn-wrapper">
           <button type="submit" id="submit-button">Submit</button>
         </div>
       </form>
-      <h2>Today's report</h2>
+      <h2>Today's report: <span id="today-date"></span></h2>
       <div class="centre">
         <img
           id="weather-image"
-          src="http://openweathermap.org/img/wn/10d@2x.png"
+          src="assets/help.png"
           alt="weather type"
+          height="128"
+          width="128"
         />
-        <div id="weather-desc">A bit rainy</div>
+        <div id="weather-desc"></div>
         <div class="temp">
-          <div id="temp-main">24&deg;</div>
-          <div id="temp-min">Min: 18&deg;</div>
-          <div id="temp-feel">Feels like 18&deg;</div>
-          <div id="temp-max">Max: 28&deg;</div>
+          <div id="temp-main"></div>
+          <div id="temp-min">Min:</div>
+          <div id="temp-feel">Feels like</div>
+          <div id="temp-max">Max:</div>
         </div>
       </div>
       <div class="row sun-time">
         <div>
-          <i class="fa-solid fa-sun"></i>Sunrise <span id="sunrise">06:54</span>
+          <i class="fa-solid fa-sun"></i>Sunrise <span id="sunrise"></span>
         </div>
         <div>
-          <i class="fa-solid fa-moon"></i>Sunset <span id="sunset">15:09</span>
+          <i class="fa-solid fa-moon"></i>Sunset <span id="sunset"></span>
         </div>
       </div>
       <div class="row">
         <div class="wind">
           <i class="fa-solid fa-wind"></i>
-          <div>Wind speed: <span id="wind-speed">25 metre/sec</span></div>
-          <div>Wind deg: <span id="wind-direction">348deg</span></div>
+          <div>Wind speed: <span id="wind-speed"></span></div>
+          <div class="wind-direction">Wind direction: <img src="assets/arrow.png" id="wind-direction" height="36" width="36"></img></div>
         </div>
         <div class="humidity">
           <i class="fa-solid fa-droplet"></i>
-          <div>Humidity: <span id="humidity">8%</span></div>
+          <div>Humidity: <span id="humidity"></span></div>
         </div>
         <div class="pressure">
           <i class="fa-solid fa-weight-hanging"></i>
-          <div>Pressure: <span id="pressure">45hPA</span></div>
+          <div>Pressure: <span id="pressure"></span></div>
         </div>
       </div>
     </main>

@@ -44,6 +44,17 @@ i {
   grid-template-areas: "main" "min" "feel" "max";
   align-items: center;
   justify-content: center;
+  background-image: url(https://cdn.pixabay.com/photo/2010/12/13/10/01/celsius-2125__340.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: right;
+  text-shadow: 0 0 2px white;
+  background-color: white;
+  background-blend-mode: hard-light;
+}
+
+.temp > div {
+  background: rgba(255, 255, 255, 0.8);
 }
 
 #temp-main {
@@ -192,4 +203,17 @@ a:hover {
   width: clamp(150px, 80%, 480px);
   margin: auto;
   font-style: italic;
+}
+
+#weather-desc {
+  text-transform: capitalize;
+}
+
+#today-date {
+  font-weight: normal;
+}
+
+.wind-direction {
+  display: flex;
+  align-items: center;
 }
