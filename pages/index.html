@@ -5,6 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather app</title>
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="https://iconarchive.com/download/i94398/bokehlicia/captiva/weather.ico"
+    />
     <link rel="stylesheet" href="css/styles.css" />
     <script
       src="https://kit.fontawesome.com/eab8467d07.js"
@@ -15,20 +20,20 @@
     <main class="wrapper">
       <div class="row">
         <div id="location"></div>
-        <button id="edit-button"><i class="fa-solid fa-pen"></i></button>
+        <button id="edit-button"><i class="fa-solid fa-xmark"></i></button>
       </div>
-      <div id="feeling"></div>
-      <form action="/weather-info" method="POST" class="hidden">
+      <div id="content"></div>
+      <form action="/weather-info" method="POST">
         <div class="form-control">
-          <label for="feeling-input">Feelings</label>
-          <textarea id="feeling-input" cols="30" rows="5"></textarea>
+          <label for="feelings">Feelings</label>
+          <textarea id="feelings" cols="30" rows="5"></textarea>
         </div>
         <div class="form-control">
-          <label for="post-code">Post code</label>
+          <label for="zip">Post or Zip code</label>
           <input
-            id="post-code"
+            id="zip"
             type="text"
-            placeholder="Post code or Zip code"
+            placeholder="Enter zip code here"
           />
         </div>
 
@@ -55,47 +60,49 @@
           </select>
         </div>
         <div class="btn-wrapper">
-          <button type="submit" id="submit-button">Submit</button>
+          <button type="submit" id="generate">Submit</button>
         </div>
       </form>
-      <h2>Today's report: <span id="today-date"></span></h2>
-      <div class="centre">
-        <img
-          id="weather-image"
-          src="assets/help.png"
-          alt="weather type"
-          height="128"
-          width="128"
-        />
-        <div id="weather-desc"></div>
-        <div class="temp">
-          <div id="temp-main"></div>
-          <div id="temp-min">Min:</div>
-          <div id="temp-feel">Feels like</div>
-          <div id="temp-max">Max:</div>
+      <h2>Today's report: <span id="date"></span></h2>
+      <div id="entryHolder" class="hidden">
+        <div class="centre">
+          <img
+            id="weather-image"
+            src="assets/help.png"
+            alt="weather type"
+            height="128"
+            width="128"
+          />
+          <div id="weather-desc"></div>
+          <div id="temp">
+            <div id="temp-main"></div>
+            <div id="temp-min">Min:</div>
+            <div id="temp-feel">Feels like</div>
+            <div id="temp-max">Max:</div>
+          </div>
         </div>
-      </div>
-      <div class="row sun-time">
-        <div>
-          <i class="fa-solid fa-sun"></i>Sunrise <span id="sunrise"></span>
+        <div class="row sun-time">
+          <div>
+            <i class="fa-solid fa-sun"></i>Sunrise <span id="sunrise"></span>
+          </div>
+          <div>
+            <i class="fa-solid fa-moon"></i>Sunset <span id="sunset"></span>
+          </div>
         </div>
-        <div>
-          <i class="fa-solid fa-moon"></i>Sunset <span id="sunset"></span>
-        </div>
-      </div>
-      <div class="row">
-        <div class="wind">
-          <i class="fa-solid fa-wind"></i>
-          <div>Wind speed: <span id="wind-speed"></span></div>
-          <div class="wind-direction">Wind direction: <img src="assets/arrow.png" id="wind-direction" height="36" width="36"></img></div>
-        </div>
-        <div class="humidity">
-          <i class="fa-solid fa-droplet"></i>
-          <div>Humidity: <span id="humidity"></span></div>
-        </div>
-        <div class="pressure">
-          <i class="fa-solid fa-weight-hanging"></i>
-          <div>Pressure: <span id="pressure"></span></div>
+        <div class="row">
+          <div class="wind">
+            <i class="fa-solid fa-wind"></i>
+            <div>Wind speed: <span id="wind-speed"></span></div>
+            <div class="wind-direction">Wind direction: <img src="assets/arrow.png" id="wind-direction" height="36" width="36"></img></div>
+          </div>
+          <div class="humidity">
+            <i class="fa-solid fa-droplet"></i>
+            <div>Humidity: <span id="humidity"></span></div>
+          </div>
+          <div class="pressure">
+            <i class="fa-solid fa-weight-hanging"></i>
+            <div>Pressure: <span id="pressure"></span></div>
+          </div>
         </div>
       </div>
     </main>
