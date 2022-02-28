@@ -39,7 +39,7 @@ i {
   color: #c93b24;
 }
 
-.temp {
+#temp {
   display: grid;
   grid-template-areas: "main" "min" "feel" "max";
   align-items: center;

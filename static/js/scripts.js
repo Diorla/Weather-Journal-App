@@ -1,7 +1,7 @@
 const editButton = document.getElementById("edit-button");
 const editIcon = document.querySelector("#edit-button >  .fa-solid");
 const form = document.querySelector("form");
-const submitButton = document.getElementById("submit-button");
+const generateButton = document.getElementById("generate");
 const countrySelect = document.getElementById("country-select");
 const languageSelect = document.getElementById("language-select");
 const unitsSelect = document.getElementById("units");
@@ -19,9 +19,10 @@ const windSpeedElem = document.getElementById("wind-speed");
 const windDirElem = document.getElementById("wind-direction");
 const humidityElem = document.getElementById("humidity");
 const pressureElem = document.getElementById("pressure");
-const feelingInput = document.getElementById("feeling-input");
-const postCodeInput = document.getElementById("post-code");
-const todayDateElem = document.getElementById("today-date");
+const feelingsInput = document.getElementById("feelings");
+const zipInput = document.getElementById("zip");
+const todayDateElem = document.getElementById("date");
+const entryHolder = document.getElementById("entryHolder");
 
 const defaultValue = {
   countryCode: "GB",
@@ -33,12 +34,16 @@ const defaultValue = {
 
 function hideForm() {
   form.classList.add("hidden");
+  entryHolder.classList.remove("hidden");
   editIcon.classList.remove("fa-xmark");
+  editIcon.classList.add("fa-pen");
 }
 
 function showForm() {
   form.classList.remove("hidden");
+  entryHolder.classList.add("hidden");
   editIcon.classList.add("fa-xmark");
+  editIcon.classList.remove("fa-pen");
 }
 
 /**
@@ -227,7 +232,7 @@ async function fetchOpenWeather(
       country,
     });
   } catch (error) {
-    submitButton.removeAttribute("disabled");
+    generateButton.removeAttribute("disabled");
   }
 }
 
@@ -298,13 +303,13 @@ function updateBody(obj) {
   pressureElem.textContent = `${pressure}hPA`;
 }
 
-submitButton.addEventListener("click", (e) => {
+generateButton.addEventListener("click", (e) => {
   e.preventDefault();
-  submitButton.setAttribute("disabled", "true");
+  generateButton.setAttribute("disabled", "true");
 
   fetchOpenWeather(
     {
-      postCode: postCodeInput.value,
+      postCode: zipInput.value,
       countryCode: countrySelect.value,
       unit: unitsSelect.value,
       language: languageSelect.value,
@@ -312,35 +317,35 @@ submitButton.addEventListener("click", (e) => {
     (data) => {
       updateBody({
         ...data,
-        feeling: feelingInput.value,
+        feeling: feelingsInput.value,
         unit: unitsSelect.value,
       });
 
       hideForm();
 
-      submitButton.removeAttribute("disabled");
+      generateButton.removeAttribute("disabled");
       // update address and other info only if it is a valid address
       postData("/weather-update", {
-        feeling: feelingInput.value,
-        postCode: postCodeInput.value,
+        feeling: feelingsInput.value,
+        postCode: zipInput.value,
         countryCode: countrySelect.value,
         unit: unitsSelect.value,
         language: languageSelect.value,
       }).catch((err) => {
         console.log("postData", err);
-        submitButton.removeAttribute("disabled");
+        generateButton.removeAttribute("disabled");
       });
     },
     (err) => {
       console.log("fetchWeather", err);
-      submitButton.removeAttribute("disabled");
+      generateButton.removeAttribute("disabled");
     }
   );
 });
 
-editButton.addEventListener("click", () => {
-  return form.classList.contains("hidden") ? showForm() : hideForm();
-});
+editButton.addEventListener("click", () =>
+  form.classList.contains("hidden") ? showForm() : hideForm()
+);
 
 document.addEventListener("DOMContentLoaded", () => {
   todayDateElem.textContent = new Date().toDateString();
@@ -354,8 +359,8 @@ document.addEventListener("DOMContentLoaded", () => {
         renderCountrySelect(countryCode);
         renderLanguageSelect(language);
         unitsSelect.value = unit;
-        feelingInput.value = feeling;
-        postCodeInput.value = postCode;
+        feelingsInput.value = feeling;
+        zipInput.value = postCode;
         fetchOpenWeather(
           {
             countryCode,
