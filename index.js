@@ -7,10 +7,19 @@ const port = 1960;
 
 const app = express();
 
-let projectData = {};
+let projectData = {
+  countryCode: "GB",
+  feeling: "No feelings added",
+  language: "en",
+  postCode: "SW1A 0AA",
+  unit: "metric",
+};
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+// deprecated
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
+app.use(express.json());
+
 app.use(cors());
 app.use(express.static("static"));
 
@@ -32,5 +41,5 @@ app.get("/weather", (req, res) => {
 
 app.post("/weather-update", (req, res) => {
   projectData = { ...projectData, ...req.body };
-  res.json(projectData);
+  res.end();
 });

@@ -92,7 +92,7 @@ i {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .form-control {
@@ -216,4 +216,31 @@ a:hover {
 .wind-direction {
   display: flex;
   align-items: center;
+}
+
+#error-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 0, 0, 0.7);
+}
+
+#error-wrapper > .fa-solid {
+  position: fixed;
+  top: 4px;
+  right: 8px;
+  cursor: pointer;
+}
+
+#error-info {
+  background-color: white;
+  min-width: 240px;
+  min-height: 100px;
+  border-radius: 4px;
+  padding: 4px;
 }
