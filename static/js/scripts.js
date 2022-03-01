@@ -1,4 +1,3 @@
-// @ts-check
 const editButton = document.getElementById("edit-button");
 const editIcon = document.querySelector("#edit-button >  .fa-solid");
 const form = document.querySelector("form");
